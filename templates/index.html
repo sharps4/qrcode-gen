@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Générateur de codes QR</title>
+</head>
+<body>
+    <h1>Générateur de codes QR</h1>
+    <form action="/generate" method="POST">
+        <label for="nb_qrcodes">Nombre de codes QR :</label>
+        <input type="number" name="nb_qrcodes" id="nb_qrcodes" required><br><br>
+
+        <label for="nb_series">Nombre de séries :</label>
+        <input type="number" name="nb_series" id="nb_series" required><br><br>
+
+        <h3>Noms des séries :</h3>
+        <!-- <label for="nb_series">Nombre de séries :</label>
+        <input type="number" name="nb_series" id="nb_series" min="1" required><br><br> -->
+
+        <div id="series_container"></div>
+
+<script>
+    window.onload = function() {
+        var nbSeriesInput = document.getElementById('nb_series');
+        var seriesContainer = document.getElementById('series_container');
+
+        nbSeriesInput.addEventListener('input', function() {
+            var nbSeries = parseInt(nbSeriesInput.value) || 0;
+
+            seriesContainer.innerHTML = '';
+
+            for (var i = 0; i < nbSeries; i++) {
+                var labelName = document.createElement('label');
+                labelName.innerHTML = 'Nom de la série ' + (i + 1) + ' : ';
+
+                var inputName = document.createElement('input');
+                inputName.type = 'text';
+                inputName.name = 'series_name_' + i;
+                inputName.required = true;
+
+                var br = document.createElement('br');
+
+                var labelCount = document.createElement('label');
+                labelCount.innerHTML = 'Nombre de codes QR pour la série ' + (i + 1) + ' : ';
+
+                var inputCount = document.createElement('input');
+                inputCount.type = 'number';
+                inputCount.name = 'qrcodes_count_' + i;
+                inputCount.required = true;
+
+                seriesContainer.appendChild(labelName);
+                seriesContainer.appendChild(inputName);
+                seriesContainer.appendChild(br.cloneNode());
+                seriesContainer.appendChild(labelCount);
+                seriesContainer.appendChild(inputCount);
+                seriesContainer.appendChild(br.cloneNode());
+            }
+        });
+    };
+</script>
+
+        <input type="submit" value="Générer les codes QR">
+    </form>
+</body>
+</html>
