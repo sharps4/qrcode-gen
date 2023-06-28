@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/styles.css">
     <title>Générateur de codes QR</title>
 </head>
 <body>
@@ -16,75 +15,98 @@
         <input type="number" name="nb_series" id="nb_series" required><br><br>
 
         <h3>Noms des séries :</h3>
-        <!-- <label for="nb_series">Nombre de séries :</label>
-        <input type="number" name="nb_series" id="nb_series" min="1" required><br><br> -->
-
         <div id="series_container"></div>
 
-<script>
-    window.onload = function() {
-        
-        var downloadLink = document.getElementById('download-link');
-
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var form = event.target;
-            var formData = new FormData(form);
-
-            fetch(form.action, {
-                method: form.method,
-                body: formData
-            })
-            .then(function(response) {
-                return response.text();
-            })
-            .then(function(downloadUrl) {
-                downloadLink.href = downloadUrl;
-                downloadLink.style.display = 'inline';
-            });
-        });
-
-        var nbSeriesInput = document.getElementById('nb_series');
-        var seriesContainer = document.getElementById('series_container');
-
-        nbSeriesInput.addEventListener('input', function() {
-            var nbSeries = parseInt(nbSeriesInput.value) || 0;
-
-            seriesContainer.innerHTML = '';
-
-            for (var i = 0; i < nbSeries; i++) {
-                var labelName = document.createElement('label');
-                labelName.innerHTML = 'Nom de la série ' + (i + 1) + ' : ';
-
-                var inputName = document.createElement('input');
-                inputName.type = 'text';
-                inputName.name = 'series_name_' + i;
-                inputName.required = true;
-
-                var br = document.createElement('br');
-
-                var labelCount = document.createElement('label');
-                labelCount.innerHTML = 'Nombre de codes QR pour la série ' + (i + 1) + ' : ';
-
-                var inputCount = document.createElement('input');
-                inputCount.type = 'number';
-                inputCount.name = 'qrcodes_count_' + i;
-                inputCount.required = true;
-
-                seriesContainer.appendChild(labelName);
-                seriesContainer.appendChild(inputName);
-                seriesContainer.appendChild(br.cloneNode());
-                seriesContainer.appendChild(labelCount);
-                seriesContainer.appendChild(inputCount);
-                seriesContainer.appendChild(br.cloneNode());
-            }
-        });
-    };
-</script>
-
         <input type="submit" value="Générer les codes QR">
-
-        <a id="download-link" style="display: none;" href="" download>Télécharger les codes QR</a>
     </form>
+
+    <form action="/generate_single" method="POST">
+        <h3>Générer une série unique :</h3>
+        <label for="series_name">Nom de la série unique :</label>
+        <input type="text" name="series_name" id="series_name" required><br><br>
+    
+        <input type="submit" value="Générer la série unique">
+    </form>
+
+    <a id="download-link" style="display: none;" href="" download>Télécharger les codes QR</a>
+
+    <script>
+        window.onload = function() {
+            
+            var downloadLink = document.getElementById('download-link');
+
+            document.querySelector('form[action="/generate"]').addEventListener('submit', function(event) {
+                event.preventDefault();
+                var form = event.target;
+                var formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(function(response) {
+                    return response.text();
+                })
+                .then(function(downloadUrl) {
+                    downloadLink.href = downloadUrl;
+                    downloadLink.style.display = 'inline';
+                });
+            });
+
+            document.querySelector('form[action="/generate_single"]').addEventListener('submit', function(event) {
+                event.preventDefault();
+                var form = event.target;
+                var formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: formData
+                })
+                .then(function(response) {
+                    return response.text();
+                })
+                .then(function(downloadUrl) {
+                    downloadLink.href = downloadUrl;
+                    downloadLink.style.display = 'inline';
+                });
+            });
+
+            var nbSeriesInput = document.getElementById('nb_series');
+            var seriesContainer = document.getElementById('series_container');
+
+            nbSeriesInput.addEventListener('input', function() {
+                var nbSeries = parseInt(nbSeriesInput.value) || 0;
+
+                seriesContainer.innerHTML = '';
+
+                for (var i = 0; i < nbSeries; i++) {
+                    var labelName = document.createElement('label');
+                    labelName.innerHTML = 'Nom de la série ' + (i + 1) + ' : ';
+
+                    var inputName = document.createElement('input');
+                    inputName.type = 'text';
+                    inputName.name = 'series_name_' + i;
+                    inputName.required = true;
+
+                    var br = document.createElement('br');
+
+                    var labelCount = document.createElement('label');
+                    labelCount.innerHTML = 'Nombre de codes QR pour la série ' + (i + 1) + ' : ';
+
+                    var inputCount = document.createElement('input');
+                    inputCount.type = 'number';
+                    inputCount.name = 'qrcodes_count_' + i;
+                    inputCount.required = true;
+
+                    seriesContainer.appendChild(labelName);
+                    seriesContainer.appendChild(inputName);
+                    seriesContainer.appendChild(br.cloneNode());
+                    seriesContainer.appendChild(labelCount);
+                    seriesContainer.appendChild(inputCount);
+                    seriesContainer.appendChild(br.cloneNode());
+                }
+            });
+        };
+    </script>
 </body>
 </html>

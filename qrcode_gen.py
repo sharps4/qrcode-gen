@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html', nb_series=1)
+    return render_template('index.html', nb_series=2)
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -47,6 +47,35 @@ def generate():
                 zip_file.write(filename)
 
         return f'/download/{zip_filename}'
+    
+@app.route('/generate_single', methods=['POST'])
+def generate_single():
+    series_name = request.form.get('series_name', "Série unique")
+
+    zip_filename = 'qrcodes.zip' 
+
+    with zipfile.ZipFile(zip_filename, 'w') as zip_file:
+        prefixe = series_name
+        data = f"{prefixe} numéro: 1"
+        filename = f"{prefixe}_1.png"
+
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+
+        img = qr.make_image(fill_color="black", back_color="white")
+        img.save(filename)
+        print(f"QR Code généré : {filename}")
+
+        # Ajouter le fichier au fichier ZIP
+        zip_file.write(filename)
+
+    return f'/download/{zip_filename}'
 
         # return 'Les codes QR ont été générés avec succès !'
 
