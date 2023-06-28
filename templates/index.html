@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur de codes QR</title>
+    <title>Générateur de QRCodes</title>
 </head>
 <body>
-    <h1>Générateur de codes QR</h1>
+    <h1>Générateur de QRCodes</h1>
     <form action="/generate" method="POST">
-        <label for="nb_qrcodes">Nombre de codes QR :</label>
+        <label for="nb_qrcodes">Nombre de QRCodes :</label>
         <input type="number" name="nb_qrcodes" id="nb_qrcodes" required><br><br>
     
         <label for="nb_series">Nombre de séries :</label>
@@ -17,12 +17,12 @@
         <h3>Noms des séries :</h3>
         <div id="series_container"></div>
 
-        <input type="submit" value="Générer les codes QR">
+        <input type="submit" value="Générer les QRCodes">
     </form>
     
     <form action="/generate_single" method="POST">
-        <h3>Générer une série unique :</h3>
-        <label for="series_name">Nom de la série unique :</label>
+        <h3>Générer un QRCode unique :</h3>
+        <label for="series_name">Nom du QRCode :</label>
         <input type="text" name="series_name" id="series_name" required><br><br>
     
         <label for="start_number">Nombre de départ :</label>
@@ -31,7 +31,7 @@
         <input type="submit" value="Générer la série unique">
     </form>
 
-    <a id="download-link" style="display: none;" href="" download>Télécharger les codes QR</a>
+    <a id="download-link" style="display: none;" href="" download>Télécharger les QRCodes</a>
 
     <script>
         window.onload = function() {

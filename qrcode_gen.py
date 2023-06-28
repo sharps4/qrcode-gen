@@ -17,7 +17,7 @@ def generate():
     qrcodes_counts = [int(request.form.get(f'qrcodes_count_{i}', 0)) for i in range(nb_series)]
     start_numbers = [int(request.form.get(f'start_number_{i}', 1)) for i in range(nb_series)]
 
-    zip_filename = 'qrcodes.zip'  # Nom du fichier ZIP
+    zip_filename = 'qrcodes.zip'  
 
     with zipfile.ZipFile(zip_filename, 'w') as zip_file:
         for serie in range(nb_series):
@@ -43,7 +43,6 @@ def generate():
                 img.save(filename)
                 print(f"QR Code {compteur} généré : {filename}")
 
-                # Ajouter le fichier au fichier ZIP
                 zip_file.write(filename)
 
     return f'/download/{zip_filename}'
@@ -54,7 +53,7 @@ def generate_single():
     series_name = request.form.get('series_name', "Série unique")
     start_number = int(request.form.get('start_number', 1))
 
-    zip_filename = 'qrcodes.zip'  # Nom du fichier ZIP
+    zip_filename = 'qrcodes.zip' 
 
     with zipfile.ZipFile(zip_filename, 'w') as zip_file:
         prefixe = series_name
@@ -74,7 +73,6 @@ def generate_single():
         img.save(filename)
         print(f"QR Code généré : {filename}")
 
-        # Ajouter le fichier au fichier ZIP
         zip_file.write(filename)
 
     return f'/download/{zip_filename}'
