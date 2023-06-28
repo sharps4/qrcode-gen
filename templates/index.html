@@ -10,20 +10,23 @@
     <form action="/generate" method="POST">
         <label for="nb_qrcodes">Nombre de codes QR :</label>
         <input type="number" name="nb_qrcodes" id="nb_qrcodes" required><br><br>
-
+    
         <label for="nb_series">Nombre de séries :</label>
         <input type="number" name="nb_series" id="nb_series" required><br><br>
-
+    
         <h3>Noms des séries :</h3>
         <div id="series_container"></div>
 
         <input type="submit" value="Générer les codes QR">
     </form>
-
+    
     <form action="/generate_single" method="POST">
         <h3>Générer une série unique :</h3>
         <label for="series_name">Nom de la série unique :</label>
         <input type="text" name="series_name" id="series_name" required><br><br>
+    
+        <label for="start_number">Nombre de départ :</label>
+        <input type="number" name="start_number" id="start_number" value="1" required><br><br>
     
         <input type="submit" value="Générer la série unique">
     </form>
